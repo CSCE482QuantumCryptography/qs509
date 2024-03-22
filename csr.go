@@ -16,7 +16,6 @@ func CreateCsr(algo SignatureAlgorithm) {
         return
     }
 
-    // Print the output
     fmt.Println(string(output))
 
     return
