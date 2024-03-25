@@ -1,4 +1,4 @@
-module github.com/josefmun9902/QuantumSafeLib
+module github.com/CSCE482QuantumCryptography/qs509.git
 
 go 1.22.1
 

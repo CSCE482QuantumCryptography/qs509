@@ -5,6 +5,7 @@ import (
 )
 
 func Test_GenerateKey(t *testing.T) {
-	
+	GenerateKey()
+
 	return
 }

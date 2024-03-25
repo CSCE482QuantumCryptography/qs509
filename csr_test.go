@@ -2,7 +2,7 @@ package qs509
 
 import (
 	"testing"
-	"github.com/stretchr/testify/assert"
+	// "github.com/stretchr/testify/assert"
 )
 
 func Test_CreateCsr(t *testing.T) {
