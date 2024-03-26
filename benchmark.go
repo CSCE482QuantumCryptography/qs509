@@ -9,11 +9,8 @@ import (
 	"github.com/xuri/excelize/v2"
 )
 
-func main() {
+func Benchmark(startTime, endTime time.Time) {
 
-	startTime := time.Now()
-
-	endTime := time.Now()
 	executionTime := endTime.Sub(startTime)
 
 	// BENCHMARK
