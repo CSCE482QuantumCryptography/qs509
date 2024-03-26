@@ -81,7 +81,7 @@ func Benchmark(startTime, endTime time.Time) {
 		}
 	}
 
-	if err := fileNew.SaveAs(saveFolderPath + "/benchmarkInstance.xlsx"); err != nil {
+	if err := fileNew.SaveAs(saveFolderPath + "/benchmarkLog/benchmarkInstance.xlsx"); err != nil {
 		log.Fatal(err)
 	}
 }
