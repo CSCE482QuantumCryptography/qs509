@@ -5,7 +5,7 @@ import (
 	"os/exec"
 )
 
-func GenerateKey(keyAlg SignatureAlgorithm, keyOut string) {
+func GenerateKey(keyAlg SignatureAlgorithm, keyOut string) (bool, error) {
 
 	checkInit()
 
@@ -14,11 +14,11 @@ func GenerateKey(keyAlg SignatureAlgorithm, keyOut string) {
 	output, err := cmd.CombinedOutput()
 
 	if err != nil {
-		fmt.Println("error")
 		fmt.Println(err.Error())
-		return
+		return false, err
 	}
 
 	fmt.Println(string(output))
 
+	return true, nil
 }

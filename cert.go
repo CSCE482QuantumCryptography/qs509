@@ -5,7 +5,7 @@ import (
 	"os/exec"
 )
 
-func GenerateCertificate(keyAlg SignatureAlgorithm, keyOut string, certOut string) {
+func GenerateCertificate(keyAlg SignatureAlgorithm, keyOut string, certOut string) (bool, error) {
 
 	checkInit()
 
@@ -14,17 +14,16 @@ func GenerateCertificate(keyAlg SignatureAlgorithm, keyOut string, certOut strin
 	output, err := cmd.CombinedOutput()
 
 	if err != nil {
-		fmt.Println("error")
 		fmt.Println(err.Error())
-		return
+		return false, err
 	}
 
 	fmt.Println(string(output))
 
-	return
+	return true, nil
 }
 
-func VerifyCertificate(caCrtPath string, certToVerify string) bool {
+func VerifyCertificate(caCrtPath string, certToVerify string) (bool, error) {
 
 	checkInit()
 
@@ -33,13 +32,12 @@ func VerifyCertificate(caCrtPath string, certToVerify string) bool {
 	output, err := cmd.CombinedOutput()
 
 	if err != nil {
-		fmt.Println("error")
 		fmt.Println(err.Error())
-		return false
+		return false, err
 	}
 
 	fmt.Println(string(output))
 
-	return true
+	return true, nil
 
 }
