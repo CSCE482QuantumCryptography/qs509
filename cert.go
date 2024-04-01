@@ -1,12 +1,11 @@
 package qs509
 
 import (
-	"crypto/x509"
 	"fmt"
 	"os/exec"
 )
 
-func GenerateCertificate(keyAlg SignatureAlgorithm, keyOut string, certOut string) string {
+func GenerateCertificate(keyAlg SignatureAlgorithm, keyOut string, certOut string) {
 
 	checkInit()
 
@@ -17,16 +16,30 @@ func GenerateCertificate(keyAlg SignatureAlgorithm, keyOut string, certOut strin
 	if err != nil {
 		fmt.Println("error")
 		fmt.Println(err.Error())
-		return string(output)
+		return
 	}
 
 	fmt.Println(string(output))
 
-	return string(output)
+	return
 }
 
-func VerifyCertificate(cert *x509.Certificate) string {
+func VerifyCertificate(caCrtPath string, certToVerify string) bool {
 
-	return "not implemented yet"
+	checkInit()
+
+	cmd := exec.Command(openSSLPath, "verify", "-CAfile", caCrtPath, certToVerify)
+
+	output, err := cmd.CombinedOutput()
+
+	if err != nil {
+		fmt.Println("error")
+		fmt.Println(err.Error())
+		return false
+	}
+
+	fmt.Println(string(output))
+
+	return true
 
 }

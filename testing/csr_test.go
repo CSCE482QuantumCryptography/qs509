@@ -17,12 +17,12 @@ func Test_GenerateCsr(t *testing.T) {
 
 	d3_sa.Set("DILITHIUM3")
 
-	qs509.GenerateCsr(d3_sa, "d3_keyOut.key", "d3_csrOut.csr")
+	qs509.GenerateCsr(d3_sa, "test_d3key.key", "test_d3Csr.csr")
 
 }
 
 func Test_SignCsr(t *testing.T) {
 
-	qs509.SignCsr("./d3_csrOut.csr", "d3_crtOut.crt", "../etc/dilithium3_CA.crt", "../etc/dilithium3_CA.key")
+	qs509.SignCsr("../etc/csr/test_d3Csr.csr", "local_signed_cert.crt", "../etc/crt/dilithium3_CA.crt", "../etc/keys/dilithium3_CA.key")
 
 }
