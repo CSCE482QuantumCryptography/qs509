@@ -5,7 +5,7 @@ import (
 	"os/exec"
 )
 
-func GenerateCsr(keyAlg SignatureAlgorithm, keyOut string, csrOut string) {
+func GenerateCsr(keyAlg SignatureAlgorithm, keyOut string, csrOut string) (bool, error) {
 
 	checkInit()
 
@@ -16,17 +16,17 @@ func GenerateCsr(keyAlg SignatureAlgorithm, keyOut string, csrOut string) {
 
 	if err != nil {
 		fmt.Println(err.Error())
-		return
+		return false, err
 	}
 
 
 	// Print the output
 	fmt.Println(string(output))
 
-	return
+	return true, nil
 }
 
-func SignCsr(csrPath string, crtOut string, caCrtPath string, caKeyPath string) {
+func SignCsr(csrPath string, crtOut string, caCrtPath string, caKeyPath string) (bool, error) {
 
 	checkInit()
 
@@ -36,11 +36,11 @@ func SignCsr(csrPath string, crtOut string, caCrtPath string, caKeyPath string) 
 
 	if err != nil {
 		fmt.Println(err.Error())
-		return
+		return false, err
 	}
 
 	// Print the output
 	fmt.Println(string(output))
 
-	return
+	return true, nil
 }
