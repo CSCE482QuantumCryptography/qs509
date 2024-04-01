@@ -1,6 +1,7 @@
 package qs509_test
 
 import (
+	"os"
 	"testing"
 
 	"github.com/CSCE482QuantumCryptography/qs509"
@@ -21,10 +22,19 @@ func Test_GenerateCertificate(t *testing.T) {
 
 }
 
+func Test_VerifyCertificateFile(t *testing.T) {
+	isValid, _ := qs509.VerifyCertificate("../etc/crt/dilithium3_CA.crt", "../etc/crt/local_signed_cert.crt")
+
+	assert.Equal(t, true, isValid, "should be the same")
+
+}
+
 func Test_VerifyCertificate(t *testing.T) {
 
-	ans := qs509.VerifyCertificate("../etc/crt/dilithium3_CA.crt", "../etc/crt/local_signed_cert.crt")
+	certBytes, _ := os.ReadFile("../etc/crt/unsigned_cert.crt")
 
-	assert.Equal(t, ans, true, "should be the same")
+	isValid, _ := qs509.VerifyCertificate("../etc/crt/dilithium3_CA.crt", certBytes)
+
+	assert.Equal(t, true, isValid, "should be the same")
 
 }
