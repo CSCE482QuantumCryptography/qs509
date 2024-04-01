@@ -1,8 +1,10 @@
 package qs509
 
 import (
-	"time"
 	"testing"
+	"time"
+
+	"github.com/CSCE482QuantumCryptography/qs509"
 )
 
 func Test_Benchmark(t *testing.T) {
@@ -10,5 +12,5 @@ func Test_Benchmark(t *testing.T) {
 
 	endTime := time.Now()
 
-	Benchmark(startTime, endTime)
+	qs509.Benchmark(startTime, endTime)
 }
