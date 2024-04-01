@@ -13,10 +13,12 @@ func GenerateCsr(keyAlg SignatureAlgorithm, keyOut string, csrOut string) {
 
 	output, err := cmd.CombinedOutput()
 
+
 	if err != nil {
 		fmt.Println(err.Error())
 		return
 	}
+
 
 	// Print the output
 	fmt.Println(string(output))
