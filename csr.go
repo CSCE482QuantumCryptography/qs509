@@ -1,23 +1,46 @@
 package qs509
 
 import (
-    "fmt"
-    "os/exec"
+	"fmt"
+	"os/exec"
 )
 
-func CreateCsr(algo SignatureAlgorithm) {
+func GenerateCsr(keyAlg SignatureAlgorithm, keyOut string, csrOut string) {
 
-    cmd := exec.Command("build/bin/openssl", "req", "-x509", "-new", "-newkey", algo.Get(), "-keyout", "dilithium3_CA.key", "-out", "dilithium3_CA.crt", "-nodes", "-subj", "/CN=test CA", "-days", "365", "-config", "openssl/apps/openssl.cnf")
+	checkInit()
 
-    output, err := cmd.CombinedOutput()
+	cmd := exec.Command(openSSLPath, "req", "-new", "-newkey", keyAlg.Get(), "-keyout", keyOut, "-out", csrOut, "-nodes", "-subj", "/CN=test server", "-config", openSSLConfigPath)
 
-    if err != nil {
-        fmt.Println(err.Error())
-        return
-    }
+	output, err := cmd.CombinedOutput()
 
-    fmt.Println(string(output))
 
-    return
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
+
+	// Print the output
+	fmt.Println(string(output))
+
+	return
 }
 
+func SignCsr(csrPath string, crtOut string, caCrtPath string, caKeyPath string) {
+
+	checkInit()
+
+	cmd := exec.Command(openSSLPath, "x509", "-req", "-in", csrPath, "-out", crtOut, "-CA", caCrtPath, "-CAkey", caKeyPath, "-CAcreateserial", "-days", "365")
+
+	output, err := cmd.CombinedOutput()
+
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
+	// Print the output
+	fmt.Println(string(output))
+
+	return
+}
