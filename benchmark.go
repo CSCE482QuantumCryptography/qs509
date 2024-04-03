@@ -87,6 +87,20 @@ func Benchmark(startTime, endTime time.Time) {
 	}
 }
 
+func CreateFile(fileName string) {
+	f := excelize.NewFile()
+	defer func() {
+		if err := f.Close(); err != nil {
+			fmt.Println(err)
+		}
+	}()
+
+	if err := f.SaveAs(fileName); err != nil {
+		fmt.Println(err)
+	}
+
+}
+
 func BenchmarkMap(timeMap map[string][]time.Time, sa string, ka string, outFile string, sheet string) {
 	f, err := excelize.OpenFile(outFile)
 	if err != nil {
