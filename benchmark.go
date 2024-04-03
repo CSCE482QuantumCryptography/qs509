@@ -87,7 +87,7 @@ func Benchmark(startTime, endTime time.Time) {
 	}
 }
 
-func BenchmarkMap(sa string, ka string, timeMap map[string][]time.Time, outFile string) {
+func BenchmarkMap(timeMap map[string][]time.Time, sa string, ka string, outFile string) {
 	f := excelize.NewFile()
 	defer func() {
 		if err := f.Close(); err != nil {
@@ -112,7 +112,7 @@ func BenchmarkMap(sa string, ka string, timeMap map[string][]time.Time, outFile 
 		executionTime := value[1].Sub(value[0])
 
 		f.SetCellValue("Sheet1", "A"+strconv.Itoa(spot), key)
-		f.SetCellValue("Sheet1", "B"+strconv.Itoa(spot), executionTime)
+		f.SetCellValue("Sheet1", "B"+strconv.Itoa(spot), executionTime.Microseconds())
 
 		spot++
 	}
