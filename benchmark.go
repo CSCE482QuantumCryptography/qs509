@@ -89,6 +89,8 @@ func Benchmark(startTime, endTime time.Time) {
 
 func CreateFile(fileName string) {
 	f := excelize.NewFile()
+	f.NewSheet("client")
+	f.NewSheet("server")
 	defer func() {
 		if err := f.Close(); err != nil {
 			fmt.Println(err)
@@ -113,14 +115,10 @@ func BenchmarkMap(timeMap map[string][]time.Time, sa string, ka string, outFile 
 		}
 	}()
 
-	index, err := f.NewSheet(sheet)
-
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-
-	f.SetActiveSheet(index)
 
 	f.SetCellValue(sheet, "A1", "SA: "+sa)
 	f.SetCellValue(sheet, "B1", "KA: "+ka)
