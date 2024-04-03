@@ -132,8 +132,8 @@ func BenchmarkMap(timeMap map[string][]time.Time, sa string, ka string, outFile 
 	for key, value := range timeMap {
 		executionTime := value[1].Sub(value[0])
 
-		f.SetCellValue("Sheet1", "A"+strconv.Itoa(spot), key)
-		f.SetCellValue("Sheet1", "B"+strconv.Itoa(spot), executionTime.Microseconds())
+		f.SetCellValue(sheet, "A"+strconv.Itoa(spot), key)
+		f.SetCellValue(sheet, "B"+strconv.Itoa(spot), executionTime.Microseconds())
 
 		spot++
 	}
