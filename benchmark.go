@@ -87,15 +87,19 @@ func Benchmark(startTime, endTime time.Time) {
 	}
 }
 
-func BenchmarkMap(timeMap map[string][]time.Time, sa string, ka string, outFile string) {
-	f := excelize.NewFile()
+func BenchmarkMap(timeMap map[string][]time.Time, sa string, ka string, outFile string, sheet string) {
+	f, err := excelize.OpenFile(outFile)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 	defer func() {
 		if err := f.Close(); err != nil {
 			fmt.Println(err)
 		}
 	}()
 
-	index, err := f.NewSheet("Sheet 1")
+	index, err := f.NewSheet(sheet)
 
 	if err != nil {
 		fmt.Println(err)
@@ -104,10 +108,13 @@ func BenchmarkMap(timeMap map[string][]time.Time, sa string, ka string, outFile 
 
 	f.SetActiveSheet(index)
 
-	f.SetCellValue("Sheet1", "A1", "Measurement")
-	f.SetCellValue("Sheet1", "B1", "Time (s)")
+	f.SetCellValue(sheet, "A1", "SA: "+sa)
+	f.SetCellValue(sheet, "B1", "KA: "+ka)
 
-	spot := 2
+	f.SetCellValue(sheet, "A2", "Measurement")
+	f.SetCellValue(sheet, "B2", "Time (us)")
+
+	spot := 3
 	for key, value := range timeMap {
 		executionTime := value[1].Sub(value[0])
 
