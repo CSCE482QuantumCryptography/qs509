@@ -23,7 +23,7 @@ func Test_GenerateCertificate(t *testing.T) {
 }
 
 func Test_VerifyCertificateFile(t *testing.T) {
-	isValid, _ := qs509.VerifyCertificate("../etc/crt/dilithium3_CA.crt", "../etc/crt/local_signed_cert.crt")
+	isValid, _ := qs509.VerifyCertificateFile("../etc/crt/dilithium3_CA.crt", "../etc/crt/local_signed_cert.crt")
 
 	assert.Equal(t, true, isValid, "should be the same")
 
