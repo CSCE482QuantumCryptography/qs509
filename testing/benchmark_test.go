@@ -14,3 +14,7 @@ func Test_Benchmark(t *testing.T) {
 
 	qs509.Benchmark(startTime, endTime)
 }
+
+func Test_CreateFile(t *testing.T) {
+	qs509.CreateFile("fileName.xlsx")
+}
