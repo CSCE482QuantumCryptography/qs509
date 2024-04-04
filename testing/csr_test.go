@@ -1,8 +1,8 @@
 package qs509_test
 
 import (
-	"testing"
 	"os"
+	"testing"
 
 	"github.com/CSCE482QuantumCryptography/qs509"
 	"github.com/stretchr/testify/assert"
@@ -34,7 +34,7 @@ func Test_GenerateCsr_InvalidAlgo(t *testing.T) {
 
 	success, err := qs509.GenerateCsr(d3_sa, "test_d3key.key", "test_d3Csr.csr")
 	assert.NoError(t, err, "Error Expected.")
-	assert.True(t, success, "Success Not Expected.")	
+	assert.True(t, success, "Success Not Expected.")
 }
 
 func Test_SignCsr_ValidCert(t *testing.T) {
