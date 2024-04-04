@@ -12,6 +12,10 @@ import (
 )
 
 func Benchmark(startTime, endTime time.Time) {
+	if startTime.After(endTime){
+		return
+	}
+
 
 	executionTime := endTime.Sub(startTime)
 
