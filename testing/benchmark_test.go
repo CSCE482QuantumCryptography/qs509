@@ -19,7 +19,7 @@ func Test_Benchmark_Sunny(t *testing.T) {
     // Run Benchmark Code
 	startTime := time.Now()
 	endTime := time.Now()
-	qs509.Benchmark(startTime, endTime)
+	qs509.Benchmark(startTime, endTime, "KyberTest")
 
 	// Output Fail if the Instance File was not created
 	_, err = os.Stat("../benchmarkLog/benchmarkInstance.xlsx");
@@ -46,7 +46,7 @@ func Test_Benchmark_Rainy(t *testing.T) {
     // Run Benchmark Code
 	endTime := time.Now()
 	startTime := time.Now()
-	qs509.Benchmark(startTime, endTime)
+	qs509.Benchmark(startTime, endTime, "KyberTest")
 
 	// Output Fail if the Instance File was not created
 	_, err = os.Stat("../benchmarkLog/benchmarkInstance.xlsx");

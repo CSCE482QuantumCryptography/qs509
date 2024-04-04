@@ -11,7 +11,7 @@ import (
 	"github.com/xuri/excelize/v2"
 )
 
-func Benchmark(startTime, endTime time.Time) {
+func Benchmark(startTime, endTime time.Time, algorithmUsed string) {
 	if startTime.After(endTime){
 		return
 	}
@@ -29,8 +29,6 @@ func Benchmark(startTime, endTime time.Time) {
 		saveFolderPath = strings.Replace(saveFolderPath, "/testing", "", -1)
 	}
 
-	// parentDir := filepath.Dir(saveFolderPath)
-	// saveParentFolderPath := parentDir
 
 	file, err := excelize.OpenFile(saveFolderPath + "/benchmarkLog/benchmarkTime.xlsx")
 	if err != nil {
@@ -51,8 +49,7 @@ func Benchmark(startTime, endTime time.Time) {
 
 	// new data to add
 	dataExcel := [][]interface{}{
-		{startTime, "test1", executionTime},
-		{startTime, "test2", executionTime},
+		{startTime, algorithmUsed, executionTime},
 	}
 	for i, row := range rows {
 		dataRow := i + 1
@@ -121,11 +118,6 @@ func BenchmarkMap(timeMap map[string][]time.Time, sa string, ka string, outFile 
 			fmt.Println(err)
 		}
 	}()
-
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
 
 	f.SetCellValue(sheet, "A1", "SA: "+sa)
 	f.SetCellValue(sheet, "B1", "KA: "+ka)
