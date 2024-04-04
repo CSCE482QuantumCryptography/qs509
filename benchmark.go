@@ -6,11 +6,16 @@ import (
 	"os"
 	"strconv"
 	"time"
+	"strings"
 
 	"github.com/xuri/excelize/v2"
 )
 
 func Benchmark(startTime, endTime time.Time) {
+	if startTime.After(endTime){
+		return
+	}
+
 
 	executionTime := endTime.Sub(startTime)
 
@@ -20,6 +25,8 @@ func Benchmark(startTime, endTime time.Time) {
 	if err != nil {
 		fmt.Println("Error:", err)
 		return
+	} else if strings.Contains(saveFolderPath, "/testing") {
+		saveFolderPath = strings.Replace(saveFolderPath, "/testing", "", -1)
 	}
 
 	// parentDir := filepath.Dir(saveFolderPath)
