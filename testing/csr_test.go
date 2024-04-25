@@ -9,7 +9,7 @@ import (
 )
 
 func init() {
-	qs509.Init("../../build/bin/openssl", "../../openssl/apps/openssl.cnf")
+	qs509.Init("../../../build/bin/openssl", "../../../openssl/apps/openssl.cnf")
 }
 
 func Test_GenerateCsr_ValidAlgo(t *testing.T) {
@@ -33,8 +33,8 @@ func Test_GenerateCsr_InvalidAlgo(t *testing.T) {
 	d3_sa.Set("DILITHIUM0")
 
 	success, err := qs509.GenerateCsr(d3_sa, "test_d3key.key", "test_d3Csr.csr")
-	assert.NoError(t, err, "Error Expected.")
-	assert.True(t, success, "Success Not Expected.")
+	assert.Error(t, err, "Error Expected.")
+	assert.False(t, success, "Success Not Expected.")
 }
 
 func Test_SignCsr_ValidCert(t *testing.T) {
@@ -48,7 +48,21 @@ func Test_SignCsr_ValidCert(t *testing.T) {
 
 func Test_SignCsr_InvalidCert(t *testing.T) {
 
+	success, err := qs509.SignCsr("invalid.csr", "local_signed_cert.crt", "../etc/crt/dilithium3_CA.crt", "../etc/keys/dilithium3_CA.key")
+	assert.Error(t, err, "Error Expected.")
+	assert.False(t, success, "Success Not Expected.")
+}
+
+func Test_SignCsr_InvalidCA(t *testing.T) {
+
 	success, err := qs509.SignCsr("../etc/csr/test_d3Csr.csr", "local_signed_cert.crt", "invalid.crt", "../etc/keys/dilithium3_CA.key")
-	assert.NoError(t, err, "Error Expected.")
-	assert.True(t, success, "Success Not Expected.")
+	assert.Error(t, err, "Error Expected.")
+	assert.False(t, success, "Success Not Expected.")
+}
+
+func Test_SignCsr_InvalidCAKey(t *testing.T) {
+
+	success, err := qs509.SignCsr("../etc/csr/test_d3Csr.csr", "local_signed_cert.crt", "../etc/crt/dilithium3_CA.crt", "invalid.key")
+	assert.Error(t, err, "Error Expected.")
+	assert.False(t, success, "Success Not Expected.")
 }

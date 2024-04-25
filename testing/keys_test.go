@@ -9,7 +9,7 @@ import (
 )
 
 func init() {
-	qs509.Init("../../build/bin/openssl", "../../openssl/apps/openssl.cnf")
+	qs509.Init("../../../build/bin/openssl", "../../../openssl/apps/openssl.cnf")
 }
 
 func Test_GenerateKey_Dilithium3(t *testing.T) {
