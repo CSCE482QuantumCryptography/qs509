@@ -9,7 +9,7 @@ import (
 )
 
 func init() {
-	qs509.Init("../../build/bin/openssl", "../../openssl/apps/openssl.cnf")
+	qs509.Init("../../../build/bin/openssl", "../../../openssl/apps/openssl.cnf")
 }
 
 func Test_GenerateCertificate_ValidAlgo(t *testing.T) {
@@ -29,8 +29,8 @@ func Test_GenerateCertificate_InvalidAlgo(t *testing.T) {
 	d3_sa.Set("INVALID")
 
 	success, err := qs509.GenerateCertificate(d3_sa, "test_key.key", "test_cert.crt")
-	assert.NoError(t, err, "Error Expected.")
-	assert.True(t, success, "Success Not Expected.")
+	assert.Error(t, err, "Error Expected.")
+	assert.False(t, success, "Success Not Expected.")
 }
 
 func Test_VerifyCertificateFile_ValidFile(t *testing.T) {
@@ -40,14 +40,22 @@ func Test_VerifyCertificateFile_ValidFile(t *testing.T) {
 
 }
 func Test_VerifyCertificateFile_InvalidFile(t *testing.T) {
-	isValid, _ := qs509.VerifyCertificateFile("invalid.crt", "../etc/crt/local_signed_cert.crt")
+	isValid, err := qs509.VerifyCertificateFile("invalid.crt", "../etc/crt/local_signed_cert.crt")
 
-	assert.Equal(t, true, isValid, "should not be the same")
+	assert.Error(t, err, "Error Expected.")
+	assert.False(t, isValid, "should not be true")
+}
+
+func Test_VerifyCertificateFile_UnsignedCert(t *testing.T) {
+	isValid, _ := qs509.VerifyCertificateFile("../etc/crt/dilithium3_CA.crt", "../etc/crt/unsigned_cert.crt")
+
+	assert.False(t, isValid, "should be false")
+
 }
 
 func Test_VerifyCertificate_ValidCert(t *testing.T) {
 
-	certBytes, _ := os.ReadFile("../etc/crt/unsigned_cert.crt")
+	certBytes, _ := os.ReadFile("../etc/crt/local_signed_cert.crt")
 
 	isValid, _ := qs509.VerifyCertificate("../etc/crt/dilithium3_CA.crt", certBytes)
 
@@ -59,8 +67,8 @@ func Test_VerifyCertificate_InvalidCert(t *testing.T) {
 
 	certBytes, _ := os.ReadFile("../etc/crt/unsigned_cert.crt")
 
-	isValid, _ := qs509.VerifyCertificate("INVALID.crt", certBytes)
+	isValid, _ := qs509.VerifyCertificate("../etc/crt/dilithium3_CA.crt", certBytes)
 
-	assert.Equal(t, true, isValid, "should not be the same")
+	assert.False(t, isValid, "should be false")
 
 }
